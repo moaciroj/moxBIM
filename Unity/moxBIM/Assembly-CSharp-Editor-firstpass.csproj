@@ -299,14 +299,14 @@
     <Reference Include="SmartExplorer">
       <HintPath>Assets\Plugins\SmartExplorer.dll</HintPath>
     </Reference>
-    <Reference Include="IFCClass">
-      <HintPath>Assets\Plugins\IFCClass.dll</HintPath>
-    </Reference>
     <Reference Include="UnityInterface">
       <HintPath>Assets\Plugins\UnityInterface.dll</HintPath>
     </Reference>
     <Reference Include="moxBIM">
       <HintPath>Assets\Plugins\moxBIM.dll</HintPath>
+    </Reference>
+    <Reference Include="IFCProject">
+      <HintPath>Assets\Plugins\IFCProject.dll</HintPath>
     </Reference>
     <Reference Include="UnityIFC">
       <HintPath>Assets\Plugins\UnityIFC.dll</HintPath>

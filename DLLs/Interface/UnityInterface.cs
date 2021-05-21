@@ -44,10 +44,12 @@ namespace Interface
         //*****************************************************************************
         //
         //Função para abrir o arquivo IFC on TIME no Unity
-        
-        public void UnityInterface_AbrirIFC() 
+        public static void UnityInterface_AbrirIFC() 
         {
-            Main.UnityMain.Instance_Main.Main_AbrirIFC();
+            if (IFC.UnityIFC.Instance_IFC.UnityIFC_AddFile())
+            {
+                Debug.Log("Desenhar IFC no núcleo Graphics");
+            }
         }
     }
 

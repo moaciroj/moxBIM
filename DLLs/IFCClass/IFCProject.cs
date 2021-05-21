@@ -1,20 +1,18 @@
 ﻿using System;
 
-
-
 namespace IFC
 {
-    public class IFCClass
+    public class IFCProject
     {
         public static bool IFCError { get; set; }
 
-        public IFCClass()
+        public IFCProject()
         {
             IFCError = false;
         }
 
 
-        public bool IFCClass_AddFile()
+        public bool IFCProject_AddFile()
         {
             IFCError = true;
             return IFCError;

@@ -7,12 +7,11 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Reference Include="IFCClass">
-		  <HintPath>$(SolutionDir)\..\Unity\moxBIM\Assets\Plugins\IFCClass.dll</HintPath>
+	
+		<Reference Include="IFCProject">
+		  <HintPath>$(SolutionDir)\..\Unity\moxBIM\Assets\Plugins\IFCProject.dll</HintPath>
 		</Reference>
-		<Reference Include="SmartExplorer">
-		  <HintPath>$(SolutionDir)\..\Unity\moxBIM\Assets\Plugins\SmartExplorer.dll</HintPath>
-		</Reference>
+	
 		<Reference Include="UnityEngine">
 			<HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
 		</Reference>

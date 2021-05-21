@@ -1,13 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-	<AssemblyName>IFCClass</AssemblyName>
-	<Platforms>AnyCPU</Platforms>
-  </PropertyGroup>
-
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<AssemblyName>IFCProject</AssemblyName>
+		<Platforms>AnyCPU</Platforms>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="SmartExplorer">
+			<HintPath>$(SolutionDir)\..\Unity\moxBIM\Assets\Plugins\SmartExplorer.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="Copy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\..\Unity\moxBIM\Assets\Plugins\IFCClass.dll&quot;" />
+		<Exec Command="Copy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\..\Unity\moxBIM\Assets\Plugins\IFCProject.dll&quot;" />
 	</Target>
 
 </Project>

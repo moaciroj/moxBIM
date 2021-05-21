@@ -6,27 +6,32 @@ namespace IFC
 {
     public class UnityIFC : MonoBehaviour
     {
-        private IFCClass UIfc;
+        private IFCProject IfcC;
 
-        public bool UnitIFC_Read = false;
-        
+        public static bool UnityIFC_Read = false;
+
+        public static UnityIFC Instance_IFC { get; private set; }
+
         //Fazer aqui a classe IFC
         void Start()
         {
-            UIfc = new IFCClass();
+            IfcC = new IFCProject();
             //Abrir aqui as varíáveis do sistema
-
             //Abrir aqui os IFC que estão na pasta do projeto
+            if (Instance_IFC != null && Instance_IFC != this)
+            {
+                GameObject.Destroy(Instance_IFC);
+            }
+            else
+            {
+                Instance_IFC = this;
+            }
         }
 
-        public void UnityIFC_AddFile()
+        public bool UnityIFC_AddFile()
         {
-            UnitIFC_Read = UIfc.IFCClass_AddFile();
-            if (UnitIFC_Read)
-            {
-               
-                Debug.Log("Entrou na UnitAbrir");
-            }
+            UnityIFC_Read = IfcC.IFCProject_AddFile();
+            return UnityIFC_Read;
         }
     }
 }

@@ -107,7 +107,7 @@
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Plugins\UnityIFC.dll" />
      <None Include="Assets\Plugins\SmartExplorer.dll" />
-     <None Include="Assets\Plugins\IFCClass.dll" />
+     <None Include="Assets\Plugins\IFCProject.dll" />
      <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
      <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
      <None Include="Assets\Plugins\UnityInterface.dll" />
@@ -338,14 +338,14 @@
     <Reference Include="SmartExplorer">
       <HintPath>Assets\Plugins\SmartExplorer.dll</HintPath>
     </Reference>
-    <Reference Include="IFCClass">
-      <HintPath>Assets\Plugins\IFCClass.dll</HintPath>
-    </Reference>
     <Reference Include="UnityInterface">
       <HintPath>Assets\Plugins\UnityInterface.dll</HintPath>
     </Reference>
     <Reference Include="moxBIM">
       <HintPath>Assets\Plugins\moxBIM.dll</HintPath>
+    </Reference>
+    <Reference Include="IFCProject">
+      <HintPath>Assets\Plugins\IFCProject.dll</HintPath>
     </Reference>
     <Reference Include="UnityIFC">
       <HintPath>Assets\Plugins\UnityIFC.dll</HintPath>
