@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+	<Platforms>AnyCPU</Platforms>
+	<AssemblyName>UnityInterface</AssemblyName>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Reference Include="moxBIM">
+      <HintPath>..\..\Unity\moxBIM\Assets\Plugins\moxBIM.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityIFC">
+      <HintPath>$(SolutionDir)\..\Unity\moxBIM\Assets\Plugins\UnityIFC.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="Copy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\..\Unity\moxBIM\Assets\Plugins\UnityInterface.dll&quot;" />
+  </Target>
+
+</Project>
