@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Interface;
 using IFC;
+using Draw;
 
 namespace Main
 {
@@ -10,6 +11,7 @@ namespace Main
     {
         public static UnityInterface Instance_Interface { get; private set; }
         public static UnityIFC       Instance_IFC { get; private set; }
+        public static UnityGraphics  Instance_Graphics { get; private set; }
         public static UnityMain      Instance_Main { get; private set; }
 
         //Guardar a instancia da classe UnityMain
@@ -29,6 +31,8 @@ namespace Main
         {
             //Instanciar a Classe IFC
             Instance_IFC = gameObject.AddComponent<UnityIFC>();
+            //Instanciar a Classe IFC
+            Instance_Graphics = gameObject.AddComponent<UnityGraphics>();
             //Ultima instancia Classe Interface
             Instance_Interface = gameObject.AddComponent<UnityInterface>();
             Debug.Log("moxBIM carregado!");

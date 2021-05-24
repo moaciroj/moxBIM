@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IFC", "IFC\IFC.csproj", "{1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interface", "Interface\Interface.csproj", "{DD7B8CE6-FB28-4055-8329-E1F8BAC78616}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFCClass", "IFCClass\IFCClass.csproj", "{1907ABA8-5CF4-434F-A5B3-4EB18EFF92B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IFCClass", "IFCClass\IFCClass.csproj", "{1907ABA8-5CF4-434F-A5B3-4EB18EFF92B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics", "UnityGraphics\Graphics.csproj", "{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,14 @@ Global
 		{1907ABA8-5CF4-434F-A5B3-4EB18EFF92B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1907ABA8-5CF4-434F-A5B3-4EB18EFF92B9}.Release|x64.ActiveCfg = Release|Any CPU
 		{1907ABA8-5CF4-434F-A5B3-4EB18EFF92B9}.Release|x64.Build.0 = Release|Any CPU
+		{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}.Debug|x64.Build.0 = Debug|Any CPU
+		{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}.Release|x64.ActiveCfg = Release|Any CPU
+		{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
