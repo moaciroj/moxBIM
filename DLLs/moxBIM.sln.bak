@@ -3,17 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Main", "UnityMain\Main.csproj", "{ECA878E1-A4B0-4A42-BAEB-E2DEB6A7F0AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Main", "Main\Main.csproj", "{ECA878E1-A4B0-4A42-BAEB-E2DEB6A7F0AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IFC", "UnityIFC\IFC.csproj", "{19ACF833-6E81-42FD-B8A9-670033C3717E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IFC", "IFC\IFC.csproj", "{19ACF833-6E81-42FD-B8A9-670033C3717E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interface", "UnityInterface\Interface.csproj", "{DD7B8CE6-FB28-4055-8329-E1F8BAC78616}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics", "UnityGraphics\Graphics.csproj", "{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interface", "Interface\Interface.csproj", "{DD7B8CE6-FB28-4055-8329-E1F8BAC78616}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IFCClass", "IFCClass\IFCClass.csproj", "{1907ABA8-5CF4-434F-A5B3-4EB18EFF92B9}"
 EndProject
-
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics", "UnityGraphics\Graphics.csproj", "{0846F09F-1F7A-436B-9823-E3B7EC2F9E5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
