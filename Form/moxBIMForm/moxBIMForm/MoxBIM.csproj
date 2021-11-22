@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<Platforms>x64</Platforms>
+		<StartupObject>MoxMain.Program</StartupObject>
+		<ApplicationIcon />
+		<RunPostBuildEvent>Always</RunPostBuildEvent>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+	  <PlatformTarget>x86</PlatformTarget>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Database.Collections.Generic" Version="2.0.3" />
+		<PackageReference Include="NETStandard.Library" Version="2.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\MoxBIM.IO\MoxBIM.IO.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Esent.Interop">
+	    <HintPath>..\..\XbimEssentials-master\Xbim.IO.Esent\bin\Debug\net472\Esent.Interop.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Microsoft.Extensions.Logging">
+	    <HintPath>..\..\XbimEssentials-master\Xbim.Common\bin\Debug\net472\Microsoft.Extensions.Logging.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Microsoft.Extensions.Logging.Abstractions">
+	    <HintPath>..\..\XbimEssentials-master\Xbim.Common\bin\Debug\net472\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Xbim.Common">
+	    <HintPath>..\..\XbimEssentials-master\Xbim.Common\bin\Debug\net472\Xbim.Common.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Xbim.Geometry.Engine.Interop">
+	    <HintPath>..\..\XbimGeometry-master\Xbim.Geometry.Engine.Interop\bin\Debug\net472\Xbim.Geometry.Engine.Interop.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Xbim.Geometry.Engine32">
+	    <HintPath>..\..\XbimGeometry-master\Xbim.Geometry.Engine.Interop\bin\Debug\net472\Xbim.Geometry.Engine32.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Xbim.Ifc">
+	    <HintPath>..\..\XbimEssentials-master\Xbim.Ifc\bin\Debug\net472\Xbim.Ifc.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Xbim.Ifc2x3">
+	    <HintPath>..\..\XbimEssentials-master\Xbim.Ifc2x3\bin\Debug\net472\Xbim.Ifc2x3.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Xbim.Ifc4">
+	    <HintPath>..\..\XbimEssentials-master\Xbim.Ifc4\bin\Debug\net472\Xbim.Ifc4.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Xbim.IO.MemoryModel">
+	    <HintPath>..\..\XbimEssentials-master\Xbim.IO.MemoryModel\bin\Debug\net472\Xbim.IO.MemoryModel.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Xbim.ModelGeometry.Scene">
+	    <HintPath>..\..\XbimGeometry-master\Xbim.ModelGeometry.Scene\bin\Debug\net472\Xbim.ModelGeometry.Scene.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Xbim.Tessellator">
+	    <HintPath>..\..\XbimEssentials-master\Xbim.Tessellator\bin\Debug\net472\Xbim.Tessellator.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="xcopy /E /S /Y &quot;$(SolutionDir)moxBIMForm\IfcProject\*&quot; &quot;$(SolutionDir)..\..\Unity\moxBIM\Assets\Plugins\IfcProject&quot;" />
+	</Target>
+
+</Project>
