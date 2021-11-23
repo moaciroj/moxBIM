@@ -7,6 +7,7 @@ Esse trabalho faz uso das blibliotecas XBIMEssentials e XbimGeometry disponívei
 https://github.com/xBimTeam e https://docs.xbim.net/
 A biblioteca XBIM é regida pelo contrato de licença: https://docs.xbim.net/license/license.html
 
-Os demais textos/códigos podem ser utilizados a qualquer momento desde que devidamente citados [https://orcid.org/0000-0002-6056-5543].
+Os demais textos/códigos podem ser utilizados a qualquer momento desde que devidamente citados.
+[https://orcid.org/0000-0002-6056-5543].
 
 Se você gostou da publicação e desejar contribuir com qualquer valor: https://apoia.se/moaciroj
