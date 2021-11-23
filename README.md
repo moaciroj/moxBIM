@@ -9,4 +9,4 @@ A biblioteca XBIM é regida pelo contrato de licença: https://docs.xbim.net/lic
 
 Os demais textos/códigos podem ser utilizados a qualquer momento desde que devidamente citados [https://orcid.org/0000-0002-6056-5543].
 
-Se você gostou da publicação e quiser contribuir com qualquer valor: https://apoia.se/moaciroj
+Se você gostou da publicação e desejar contribuir com qualquer valor: https://apoia.se/moaciroj
