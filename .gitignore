@@ -66,16 +66,6 @@ crashlytics-build.properties
 
 
 
-## Ignorar arquivos compactados
-*.rar
-*.zip
-
-
-
-
-
-
-
 
 
 ## Ignore Visual Studio temporary files, build results, and
