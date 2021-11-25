@@ -127,23 +127,23 @@ namespace MoxMain
         {
             TextLog.Text += s;
         }
-        private void AddTextLine(string s)
+        public void AddTextLine(string s)
         {
             AddText("\r\n" + s);
         }
 
-        private void NewLine()
+        public void NewLine()
         {
             AddText("\r\n");
         }
 
-        private void NewLine(int rep)
+        public void NewLine(int rep)
         {
             for (int i = 0; i < rep; i++)
                AddText("\r\n");
         }
 
-        private void ClearText()
+        public void ClearText()
         {
             TextLog.Text = "";
         }

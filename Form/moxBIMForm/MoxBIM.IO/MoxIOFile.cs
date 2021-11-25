@@ -16,20 +16,7 @@ namespace MoxBIM.IO
         {
             geometrylist.AddGeometry(g);
         }
-
-        /*
-        public void AddEntity (MoxGeometry g, MoxEntity e)
-        {
-            var resp = geometrylist.FindGeometry(g);
-            if (resp == null)
-            {
-                resp = new MoxGeometry(e.File);
-                geometrylist.AddGeometry(resp);
-            }
-            resp.AddEntity(e);
-        }
-        */
-
+        
         public MoxGeometry FindGeometry (string s)
         {
             return geometrylist.geometries.Find(x => x.FileName == s);

@@ -16,7 +16,8 @@ namespace MoxGraphics
         void Start()
         {
             moxw = GameObject.Find("MoxWindowCanvas");
-            currentgeometry = geometries.ReadFileGeometry(@"C:\Users\moaci\OneDrive\Área de Trabalho\Projeto1 MVD1.mox");
+            currentgeometry = geometries.ReadFileGeometry(@"C:\Users\moaci\OneDrive\Área de Trabalho\Projeto1.mox");
+            Do3D(currentgeometry);
         }
 
         void Update()

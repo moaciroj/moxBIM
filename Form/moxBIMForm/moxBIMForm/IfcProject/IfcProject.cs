@@ -5,7 +5,8 @@ using System.Linq;
 using MoxGraphics;
 using MoxGraphics.Geometry;
 using MoxBIM.IO;
-
+using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace MoxProject
 {
@@ -98,13 +99,21 @@ namespace MoxProject
                         MoxIOFile geometries = new MoxIOFile();
                         geometries.AddGeometry(geometry);
                         geometries.WriteFileGeometry(fileifcname, null);
-
-                        //MoxIOFile TESTE = new MoxIOFile();
-                        //MoxGeometry g = TESTE.ReadFileGeometry(fileifcname);
-
+                        
+                        /*
+                        MoxIOFile TESTE = new MoxIOFile();
+                        var sw1 = Stopwatch.StartNew();
+                        MoxGeometry g = TESTE.ReadFileGeometry(fileifcname);
+                        long t1 = sw1.ElapsedMilliseconds;
+                        var sw2 = Stopwatch.StartNew();
+                        MoxGeometry y = TESTE.ReadFileGeometryMemory(fileifcname);
+                        long t2 = sw2.ElapsedMilliseconds;
+                        MessageBox.Show("Tempo do algorítimo 1 = " + t1 + "\r\nTempo do algorítimo 2 = " + t2);
+                        */
+                        
                         MoxGraphicsClass graphics = new MoxGraphicsClass();
                         graphics.SendToUnity(fileifcname);
-                        
+
                         return true;
                     }
                 }
