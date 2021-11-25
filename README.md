@@ -1,5 +1,6 @@
 # moxBIM
 
+Work developed during research for a Master's Thesis in Applied Computing (MCA-UNIVALI), with the main objective of opening IFC-BIM files at runtime in UNITY.
 
 # License
 
