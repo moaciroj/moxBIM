@@ -1,13 +1,16 @@
 # moxBIM
 
-Trabalho desenvolvido durante pesquisa de Dissertação de Mestrado em Computação Aplicada (MCA-UNIVALI), com objetivo principal de abrir arquivos IFC-BIM em tempo de execução na UNITY.
 
-# Licença
-Esse trabalho faz uso das blibliotecas XBIMEssentials e XbimGeometry disponíveis em:
-https://github.com/xBimTeam e https://docs.xbim.net/
-A biblioteca XBIM é regida pelo contrato de licença: https://docs.xbim.net/license/license.html
+# License
 
-Os demais textos/códigos podem ser utilizados a qualquer momento desde que devidamente citados.
+This work makes use of the XBIMEssentials and XbimGeometry libraries available at:
+https://github.com/xBimTeam and https://docs.xbim.net/
+
+The XBIM library is governed by the license agreement:
+https://docs.xbim.net/license/license.html
+
+The other texts/codes can be used at any time as long as they are cited:
 [https://orcid.org/0000-0002-6056-5543].
 
+If you liked the publication and want to contribute with any value: https://apoia.se/moaciroj
 Se você gostou da publicação e desejar contribuir com qualquer valor: https://apoia.se/moaciroj
