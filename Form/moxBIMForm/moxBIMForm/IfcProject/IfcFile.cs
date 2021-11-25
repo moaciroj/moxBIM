@@ -132,6 +132,8 @@ namespace MoxProject
                     var schema = model.SchemaVersion;
                     
                     geometry = GetIfcData();
+
+                    //var g = GetIfcData2();
                 }
                 catch (Exception ex)
                 {
@@ -171,37 +173,73 @@ namespace MoxProject
             return mygeo;
         }
 
+        #region Bkp GetIfcData lesstime
+        /*
+        private MoxGeometry GetIfcData2()
+        {
+            MoxGeometry mygeo = new MoxGeometry(FileName, (float)model.ModelFactors.OneMetre);
+            using (model)
+            using (var txn = model.GeometryStore.BeginRead())
+            {
+                int p = 0;
+                foreach (IXbimShapeGeometryData geo in txn.ShapeGeometries)
+                {
+                    int label = geo.IfcShapeLabel;
+                    int parent = geo.ShapeLabel;
+                    string type = "Get ExpressType"; //Search express type here
+                    MoxMaterial material = GetIfcMaterial(txn.ShapeInstances.ElementAt(p));
+                    List<float[]> pts = null;
+                    List<int> idxs = null;
+                    using (var ms = new MemoryStream(geo.ShapeData))
+                    using (var br = new BinaryReader(ms))
+                    {
+                        var v = br.ReadShapeTriangulation();
+                        v.ToPointsWithNormalsAndIndices(out pts, out idxs);
+                        
+                    }
+                    mygeo.AddEntity(FileName, label, parent, type, material, pts, idxs);
+                    p++;
+                }
+            }
+            return mygeo;
+        }
+        */
+        #endregion
+
         protected MoxMaterial GetIfcMaterial(XbimShapeInstance instance)
         {
             MoxColor colorifc = new MoxColor();
             string name = "Standard";
-
-            var styleId = instance.StyleLabel;
-            if (styleId > 0 && instance.HasStyle)
+            if (instance != null)
             {
-                IfcMaterial ifcMaterial = new IfcMaterial();
-
-                var sStyle = model.Instances[styleId] as e4.Interfaces.IIfcSurfaceStyle;
-                var texture = XbimTexture.Create(sStyle);
-                if (texture.ColourMap.Count > 0)
+                var styleId = instance.StyleLabel;
+                if (styleId > 0 && instance.HasStyle)
                 {
-                    if (texture.ColourMap[0].Alpha <= 0)
+                    IfcMaterial ifcMaterial = new IfcMaterial();
+                    var sStyle = model.Instances[styleId] as e4.Interfaces.IIfcSurfaceStyle;
+                    if (sStyle != null)
                     {
-                        texture.ColourMap[0].Alpha = 0.5f;
-                        Logger.LogWarning("Fully transparent style #{styleId} forced to 50% opacity.", styleId);
+                        var texture = XbimTexture.Create(sStyle);
+                        if (texture.ColourMap.Count > 0)
+                        {
+                            if (texture.ColourMap[0].Alpha <= 0)
+                            {
+                                texture.ColourMap[0].Alpha = 0.5f;
+                                Logger.LogWarning("Fully transparent style #{styleId} forced to 50% opacity.", styleId);
+                            }
+                        }
+                        texture.DefinedObjectId = styleId;
+                        ifcMaterial.CreateMaterial(texture);
+
+                        colorifc.R = (byte)(ifcMaterial._material.Red * 255f);
+                        colorifc.G = (byte)(ifcMaterial._material.Green * 255f);
+                        colorifc.B = (byte)(ifcMaterial._material.Blue * 255f);
+                        colorifc.A = ifcMaterial._material.Alpha;
+
+                        if (ifcMaterial.Description != null) name = ifcMaterial.Description;
                     }
                 }
-                texture.DefinedObjectId = styleId;
-                ifcMaterial.CreateMaterial(texture);
-
-                colorifc.R = (byte)(ifcMaterial._material.Red * 255f);
-                colorifc.G = (byte)(ifcMaterial._material.Green * 255f);
-                colorifc.B = (byte)(ifcMaterial._material.Blue * 255f);
-                colorifc.A = ifcMaterial._material.Alpha;
-
-                if (ifcMaterial.Description != null) name = ifcMaterial.Description;
             }
-            
             return new MoxMaterial(colorifc, name);
         }
     }
