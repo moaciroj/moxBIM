@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MoxGraphics.Geometry;
-using CielaSpike;
-using System.Collections;
 
 namespace MoxGraphics
 {
@@ -22,14 +20,14 @@ namespace MoxGraphics
                 float scale = 1f;
                 if (g.OneMetre >= 0)
                     scale = 1 / g.OneMetre;
-                obj.transform.localScale = new Vector3(scale, scale, scale);
+                obj.transform.localScale = new Vector3(-scale, scale, scale);
             }
             return obj;
         }
 
         static GameObject MakeMesh(MoxEntity ent)
         {
-            GameObject parent, entity;
+            GameObject parent, gameobject;
 
             if (ent.Parent > 0)
                 parent = GameObject.Find(ent.Parent.ToString());
@@ -38,31 +36,22 @@ namespace MoxGraphics
             if (parent == null)
                 parent = new GameObject(ent.File);
 
-            entity = new GameObject(ent.Label.ToString());
+            gameobject = new GameObject(ent.Label.ToString());
 
-            entity.transform.parent = parent.transform;
-
-            //Create entity geometry
+            gameobject.transform.parent = parent.transform;
 
             if (ent.Points == null && ent.Points.Count < 3)
-                return entity;
+                return gameobject;
 
-            MeshRenderer meshRenderer = entity.AddComponent<MeshRenderer>();
+            MeshRenderer meshRenderer = gameobject.AddComponent<MeshRenderer>();
 
             meshRenderer.sharedMaterial = GetUniqueMaterial(ent.Material.name, ent.Material.GetColor());
 
-            MeshFilter meshFilter = entity.AddComponent<MeshFilter>();
+            MeshFilter meshFilter = gameobject.AddComponent<MeshFilter>();
 
             Mesh mesh = new Mesh();
 
-            Vector3[] vertices = new Vector3[ent.Points.Count];
-            Vector3[] normals = new Vector3[ent.Points.Count];
-
-            for (int i = 0; i < ent.Points.Count; i++)
-            {
-                vertices[i] = new Vector3(ent.Points[i][1], ent.Points[i][2], ent.Points[i][0]);
-                normals[i] = new Vector3(ent.Points[i][4], ent.Points[i][5], ent.Points[i][3]);
-            }
+            DoTrasnform(ent, ref gameobject, out var vertices, out var normals);
 
             Debug.Log(ent.Material.name);
             
@@ -71,47 +60,76 @@ namespace MoxGraphics
 
             mesh.triangles = ent.Index.ToArray();
 
-            mesh.normals = normals;
-            //mesh.RecalculateNormals();
+           //mesh.normals = normals;
+            mesh.RecalculateNormals();
 
-            /*
-            Vector2[] uvs = new Vector2[vertices.Length];
-            for (int i = 0; i < uvs.Length; i++)
-            {
-                uvs[i] = new Vector2(vertices[i].x, vertices[i].z);
-            }
-            mesh.uv = uvs;
-            */
-            
             mesh.Optimize();
 
             meshFilter.mesh = mesh;
 
-            return entity;
+            return gameobject;
         }
 
-        static Dictionary<string, Dictionary<MoxColor, Material>> storedMaterials;
+        static void DoTrasnform(MoxEntity ent, ref GameObject gameobject, out Vector3[] vertices, out Vector3[] normals)
+        {
+            vertices = new Vector3[ent.Points.Count];
+            normals = new Vector3[ent.Points.Count];
 
-        static Material GetUniqueMaterial(string Name , MoxColor color)
+            List<float[]> Lpts = ent.Points;
+            if (Lpts != null && Lpts.Count > 0)
+            {
+                if (!ent.Transform.HasValue)
+                {
+                    for (int i = 0; i < Lpts.Count; i++)
+                    {
+                        vertices[i] = new Vector3(Lpts[i][1], Lpts[i][2], Lpts[i][0]);
+                        normals[i] = new Vector3(Lpts[i][4], Lpts[i][5], Lpts[i][3]);
+                    }
+                }
+                else
+                {
+                    var qtn = ent.Transform.Value.GetRotationQuaternion();
+                    var quaternion = new Quaternion((float)qtn.X, (float)qtn.Y, (float)qtn.Z, (float)qtn.W);
+                    MoxMatrix3D? matrix3D = ent.Transform.Value;
+
+                    for (int i = 0; i < Lpts.Count; i++)
+                    {
+                        MoxPoint3D ptv = new MoxPoint3D(Lpts[i][0], Lpts[i][1], Lpts[i][2]);
+                        var ptx = matrix3D.Value.Transform(ptv);
+                        vertices[i] = new Vector3((float)ptx.Y, (float)ptx.Z, (float)ptx.X);
+
+                        /*
+                        MoxPoint3D ptn = new MoxPoint3D(Lpts[i][3], Lpts[i][4], Lpts[i][5]);
+                        var ptr = matrix3D.Value.Transform(ptn);
+                        normals[i] = new Vector3((float)ptr.Y, (float)ptr.Z, (float)ptr.X);
+                        */
+                    }
+                }
+            }
+        }
+
+        static Dictionary<string, Dictionary<MoxColor, UnityEngine.Material>> storedMaterials;
+
+        static UnityEngine.Material GetUniqueMaterial(string Name , MoxColor color)
         {
             var shd = Shader.Find(Name);
-            Material mat;
+            UnityEngine.Material mat;
             if (shd != null)
-                mat = new Material(shd);
+                mat = new UnityEngine.Material(shd);
             else
-                mat = new Material(Shader.Find("Standard"));
+                mat = new UnityEngine.Material(Shader.Find("Standard"));
 
-            if (storedMaterials == null) storedMaterials = new Dictionary<string,Dictionary<MoxColor, Material>>();
+            if (storedMaterials == null) storedMaterials = new Dictionary<string,Dictionary<MoxColor, UnityEngine.Material>>();
 
             if (!storedMaterials.ContainsKey(Name))
             {
-                Dictionary<MoxColor, Material> newDict = new Dictionary<MoxColor, Material>();
+                Dictionary<MoxColor, UnityEngine.Material> newDict = new Dictionary<MoxColor, UnityEngine.Material>();
                 storedMaterials.Add(Name, newDict);
             }
             
             if (!storedMaterials[Name].ContainsKey(color))
             {
-                Material clone = Material.Instantiate(mat) as Material;
+                UnityEngine.Material clone = UnityEngine.Material.Instantiate(mat) as UnityEngine.Material;
 
                 if (color.R < 0 || color.R > 255) color.R = 255; 
                 if (color.G < 0 || color.G > 255) color.G = 255; 

@@ -5,11 +5,15 @@ using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Xbim.Common;
+using Xbim.Common.Federation;
 using Xbim.Common.Geometry;
+using Xbim.Common.Metadata;
+using Xbim.Geometry.Engine.Interop;
+using Xbim.Ifc;
+using Xbim.Ifc4.Interfaces;
+using Xbim.ModelGeometry.Scene;
 using Xbim.Common.Step21;
 using Xbim.Common.XbimExtensions;
-using Xbim.Ifc;
-using Xbim.ModelGeometry.Scene;
 using e4 = Xbim.Ifc4;
 using e2x3 = Xbim.Ifc2x3;
 using MoxBIM.IO;
@@ -130,7 +134,7 @@ namespace MoxProject
                         return null;
                     }
                     var schema = model.SchemaVersion;
-                    
+
                     geometry = GetIfcData();
 
                     //var g = GetIfcData2();
@@ -156,7 +160,11 @@ namespace MoxProject
                 MoxMaterial material = GetIfcMaterial(instance);
                 List<float[]> pts = null;
                 List<int> idxs = null;
-
+                XbimMatrix3D? t = instance.Transformation;
+                MoxMatrix3D? transform = null;
+                if (t.HasValue)
+                    transform = new MoxMatrix3D(t.Value.M11, t.Value.M12, t.Value.M13, t.Value.M14, t.Value.M21, t.Value.M22, t.Value.M23, t.Value.M24, t.Value.M31, t.Value.M32, t.Value.M33, t.Value.M34, t.Value.OffsetX, t.Value.OffsetY, t.Value.OffsetZ, t.Value.M44);
+                
                 //get ifc geometry
                 var geometry = context.ShapeGeometry(instance);
                 var data = ((IXbimShapeGeometryData)geometry).ShapeData;
@@ -166,9 +174,10 @@ namespace MoxProject
                     {
                         var mesh = reader.ReadShapeTriangulation();
                         mesh.ToPointsWithNormalsAndIndices(out pts, out idxs);
+                        
                     }
                 }
-                mygeo.AddEntity(FileName, label, parent, type, material, pts, idxs);
+                mygeo.AddEntity(FileName, label, parent, type, material, pts, idxs, transform);
             }
             return mygeo;
         }
@@ -195,7 +204,7 @@ namespace MoxProject
                     {
                         var v = br.ReadShapeTriangulation();
                         v.ToPointsWithNormalsAndIndices(out pts, out idxs);
-                        
+
                     }
                     mygeo.AddEntity(FileName, label, parent, type, material, pts, idxs);
                     p++;

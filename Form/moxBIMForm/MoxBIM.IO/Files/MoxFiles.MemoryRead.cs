@@ -80,6 +80,10 @@ namespace MoxBIM.IO
                 int parent = 0;
                 string type = "Standard";
                 MoxMaterial material = new MoxMaterial();
+                
+                MoxMatrix3D transform = new MoxMatrix3D();
+                transform.SetIdentify();
+                
                 List<float[]> points = new List<float[]>();
                 List<int> index = new List<int>();
 
@@ -120,6 +124,16 @@ namespace MoxBIM.IO
                 else
                     throw new IOException("[COLOR] Inconsistência no arquivo de dados .mox.");
 
+                l = MemoryWhileNotEqual(ref lines, ref posline, "TRANSFORM");
+                if (l.Length > 0)
+                {
+                    l = l.Substring(10).Trim(' ', ';', ':');
+                    if (l.Length > 0 && transform.ByString(l, out var t))
+                        transform = t ?? transform;
+                }
+                else
+                    throw new IOException("[TRANSFORM] Inconsistência no arquivo de dados .mox.");
+
                 l = MemoryWhileNotEqual(ref lines, ref posline, "");
                 if (l.Length > 0)
                 {
@@ -137,7 +151,7 @@ namespace MoxBIM.IO
                             throw new IOException("[ENDSEC_POINTS] Inconsistência no arquivo de dados .mox.");
 
                     }
-                    moxg.AddEntity(new MoxEntity(moxg.FileName, label, parent, type, material, points, index));
+                    moxg.AddEntity(new MoxEntity(moxg.FileName, label, parent, type, material, points, index, transform));
 
                     l = MemoryWhileNotEqual(ref lines, ref posline, "");
                     if (l != "ENDSEC_ENTITY")

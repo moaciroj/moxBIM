@@ -47,9 +47,9 @@ namespace MoxGraphics.Geometry
             Entities.Add(e);
         }
 
-        public void AddEntity(string f, int l, int pr, string ty, MoxMaterial mat, List<float[]> p, List<int> id)
+        public void AddEntity(string f, int l, int pr, string ty, MoxMaterial mat, List<float[]> p, List<int> id, MoxMatrix3D? t)
         {
-            var _ent = new MoxEntity(f, l, pr, ty, mat, p, id);
+            var _ent = new MoxEntity(f, l, pr, ty, mat, p, id, t);
             AddEntity(_ent);
         }
     }

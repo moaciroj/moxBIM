@@ -41,6 +41,10 @@ namespace MoxBIM.IO
                     wt.WriteLine("LABEL_PARENT: " + item.Parent + ";");
                     wt.WriteLine("TYPE: '" + item.Type + "';");
                     wt.WriteLine("COLOR: R" + item.Material.GetColor().R + ", G" + item.Material.GetColor().G + ", B" + item.Material.GetColor().B + ", A" + item.Material.GetColor().A + ", NAME: '" + item.Material.name + "';");
+                    if(item.Transform.HasValue)
+                        wt.WriteLine("TRANSFORM: " + item.Transform.Value.DoString() + ";");
+                    else
+                        wt.WriteLine("TRANSFORM: ;");
                     if (item.Points.Count > 0 && item.Index.Count > 0)
                     {
                         wt.WriteLine("POINTS;");
