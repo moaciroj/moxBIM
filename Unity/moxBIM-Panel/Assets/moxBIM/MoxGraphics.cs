@@ -16,8 +16,12 @@ namespace MoxGraphics
         void Start()
         {
             moxw = GameObject.Find("MoxWindowCanvas");
-            //currentgeometry = geometries.ReadFileGeometry(@"C:\Users\moaci\OneDrive\Área de Trabalho\Projeto1.mox");
-            //Do3D(currentgeometry);
+            currentgeometry = geometries.ReadFileGeometry(@"C:\Users\moaci\OneDrive\Área de Trabalho\Projeto AR Curso.mox");
+
+            Do3D(currentgeometry);
+            //PrintGeometry(currentgeometry);
+
+            var gameobject = Resources.Load("moxMesh");
         }
 
         void Update()
@@ -70,36 +74,17 @@ namespace MoxGraphics
                                                                  c.B.ToString() + "] A [" +
                                                                  c.A.ToString("R") + "] Name: " +
                                                                  en.Material.name + ";");
+                    AddMoxWindow(Gsp(tab * 2) + "- Transform: " + en.Transform.ToString() + ";");
                     var pts = en.Points;
                     if (pts != null)
                     {
                         AddMoxWindow(Gsp(tab * 2) + "- Points: ");
-                        string txt;
                         for (int j = 0; j < pts.Count; j++)
                         {
-                            float[] arr = new float[6];
-                            arr = pts[j];
-                            string line = "";
-                            for (int k = 0; k < arr.Length; k++)
-                            {
-                                if (k == 0)
-                                    txt = arr[k].ToString("R");
-                                else
-                                    txt = "," + arr[k].ToString("R");
-                                line += txt;
-                            }
-                            AddMoxWindow(Gsp(tab * 3) + "p[" + j.ToString() +"]: " + line + ";");
+                            AddMoxWindow(Gsp(tab * 3) + "p: " + pts[j].ToString() + ";");
                         }
 
-                        txt = "";
-                        for (int j = 0; j < en.Index.Count; j++)
-                        {
-                            if (j == 0)
-                                txt += en.Index[j].ToString();
-                            else
-                                txt += "," + en.Index[j].ToString();
-                        }
-                        AddMoxWindow(Gsp(tab * 2) + "- Index: " + txt);
+                        AddMoxWindow(Gsp(tab * 2) + "- Index: " + en.IdxToString() + ";");
                     }
                     AddMoxWindow();
                 }

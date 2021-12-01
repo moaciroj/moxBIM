@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{9AB871EC-1492-9FDB-0B4F-F56F0F92CE30}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -67,7 +68,9 @@
     <Compile Include="Assets\moxBIM\MoxGraphics.cs" />
     <Compile Include="Assets\moxBIM\Presentation\MoxText.cs" />
     <Compile Include="Assets\CielaSpike\Thread Ninja\Task.cs" />
-    <Compile Include="Assets\moxBIM\Forms\MoxGraphics.Form.cs" />
+    <Compile Include="Assets\moxBIM\Forms\MoxGraphics.Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Assets\moxBIM\UnityMain.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\CameraSwitch.cs" />
@@ -77,13 +80,15 @@
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
     <Compile Include="Assets\moxBIM\UnityInterface.cs" />
+    <Compile Include="Assets\moxBIM\Presentation\moxMesh.cs" />
+    <Compile Include="Assets\moxBIM\Presentation\TreeView.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\moxBIM\Forms\Dlls\System.Windows.Forms.dll" />
-     <None Include="Assets\moxBIM\smcs.rsp" />
-     <None Include="Assets\moxBIM\Forms\Dlls\System.Drawing.dll" />
-     <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
-     <None Include="Assets\moxBIM\MoxBIM.IO.dll" />
+    <None Include="Assets\moxBIM\Forms\Dlls\System.Windows.Forms.dll" />
+    <None Include="Assets\moxBIM\smcs.rsp" />
+    <None Include="Assets\moxBIM\Forms\Dlls\System.Drawing.dll" />
+    <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
+    <None Include="Assets\moxBIM\MoxBIM.IO.dll" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.2.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

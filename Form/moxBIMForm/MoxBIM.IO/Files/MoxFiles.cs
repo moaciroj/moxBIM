@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using MoxGraphics.Geometry;
@@ -26,52 +27,16 @@ namespace MoxBIM.IO
             return f + ".mox";
         }
 
-        private static float[] GetLinePoints(string l)
+        private static bool GetIndex(string csv, ref List<int> index)
         {
-            int pos = 0;
-            float[] px = new float[6] { 0f, 0f, 0f, 0f, 0f, 0f };
-            while (l.Length > 0 && pos < 6)
-            {
-                float r = 0f;
-                if (l.IndexOf(',') >= 0)
-                {
-                    if (float.TryParse(l.Substring(0, l.IndexOf(',')).Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out float _r))
-                        r = _r;
-                    l = l.Substring(l.IndexOf(',') + 1).Trim(' ', ';', ':');
-                }
-                else
-                {
-                    if (float.TryParse(l.Substring(0).Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out float _r))
-                        r = _r;
-                    l = "";
-                }
-                px[pos] = r;
-                pos++;
-            }
-            return px;
-        }
-
-
-        private static void GetIndex(string l, ref List<int> index)
-        {
-            l = l.Substring(7);
-            while (l != null && l.Length > 0)
-            {
-                int i = -1;
-                if (l.IndexOf(',') >= 0)
-                {
-                    if (int.TryParse(l.Substring(0, l.IndexOf(',')).Trim(), out int _i))
-                        i = _i;
-                    l = l.Substring(l.IndexOf(',') + 1).Trim(' ', ';', ':');
-                }
-                else
-                {
-                    if (int.TryParse(l.Substring(0).Trim(), out int _i))
-                        i = _i;
-                    l = "";
-                }
-                if (i >= 0) index.Add(i);
-            }
+            int val;
+            var numberStyle = NumberStyles.AllowThousands |
+                              NumberStyles.AllowExponent;
+            index = csv.Split(',')
+                       .Select(m => { int.TryParse(m, numberStyle, CultureInfo.InvariantCulture, out val); return val; })
+                       .ToList();
+            if (index.Count % 3 != 0) return false;
+            return true;
         }
 
         private static MoxMaterial GetMaterial(string m)

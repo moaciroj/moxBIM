@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MoxGraphics.Geometry;
+using System.Collections;
+using CielaSpike;
+using UnityEditor;
 
 namespace MoxGraphics
 {
@@ -9,10 +12,30 @@ namespace MoxGraphics
         public GameObject Do3D(MoxGeometry g)
         {
             List<MoxEntity> lent = g.Entities;
-            
+
+            GameObject treeview = GameObject.Find("TreeView");
+
             foreach (MoxEntity ent in lent)
             {
-                MakeMesh(ent);
+                GameObject parent, gameobject;
+
+                if (ent.Parent > 0)
+                    parent = GameObject.Find(ent.Parent.ToString());
+                else
+                    parent = GameObject.Find(ent.File);
+                
+                if (parent == null)
+                {
+                    parent = new GameObject(ent.File);
+                    parent.transform.parent = treeview.transform;
+                }
+
+                gameobject = treeview.GetComponent<TreeView>().AddMesh(ent, parent);
+                //gameobject = MakeMesh(ent, parent);
+
+                Undo.RegisterCreatedObjectUndo(gameobject, "Created Object");
+
+                
             }
             var obj = GameObject.Find(g.FileName);
             if (obj != null)
@@ -23,68 +46,47 @@ namespace MoxGraphics
                 obj.transform.localScale = new Vector3(-scale, scale, scale);
             }
             return obj;
+            
         }
 
-        static GameObject MakeMesh(MoxEntity ent)
+        IEnumerator WaitFor(float s)
         {
-            GameObject parent, gameobject;
+            yield return new WaitForSecondsRealtime(s);
+        }
 
-            if (ent.Parent > 0)
-                parent = GameObject.Find(ent.Parent.ToString());
-            else
-                parent = GameObject.Find(ent.File);
-            if (parent == null)
-                parent = new GameObject(ent.File);
-
-            gameobject = new GameObject(ent.Label.ToString());
-
+        private GameObject MakeMesh(MoxEntity ent, GameObject parent)
+        {
+            GameObject gameobject = new GameObject(ent.Label.ToString());
             gameobject.transform.parent = parent.transform;
-
             if (ent.Points == null && ent.Points.Count < 3)
                 return gameobject;
-
             MeshRenderer meshRenderer = gameobject.AddComponent<MeshRenderer>();
-
             meshRenderer.sharedMaterial = GetUniqueMaterial(ent.Material.name, ent.Material.GetColor());
-
             MeshFilter meshFilter = gameobject.AddComponent<MeshFilter>();
-
             Mesh mesh = new Mesh();
-
             DoTrasnform(ent, ref gameobject, out var vertices, out var normals);
-
             Debug.Log(ent.Material.name);
-            
             mesh.vertices = vertices;
             mesh.RecalculateBounds();
-
             mesh.triangles = ent.Index.ToArray();
-
-           //mesh.normals = normals;
             mesh.RecalculateNormals();
-
             mesh.Optimize();
-
             meshFilter.mesh = mesh;
-
             return gameobject;
         }
 
-        static void DoTrasnform(MoxEntity ent, ref GameObject gameobject, out Vector3[] vertices, out Vector3[] normals)
+        private void DoTrasnform(MoxEntity ent, ref GameObject gameobject, out Vector3[] vertices, out Vector3[] normals)
         {
             vertices = new Vector3[ent.Points.Count];
             normals = new Vector3[ent.Points.Count];
 
-            List<float[]> Lpts = ent.Points;
+            List<MoxPoint3D> Lpts = ent.Points;
             if (Lpts != null && Lpts.Count > 0)
             {
                 if (!ent.Transform.HasValue)
                 {
                     for (int i = 0; i < Lpts.Count; i++)
-                    {
-                        vertices[i] = new Vector3(Lpts[i][1], Lpts[i][2], Lpts[i][0]);
-                        normals[i] = new Vector3(Lpts[i][4], Lpts[i][5], Lpts[i][3]);
-                    }
+                        vertices[i] = new Vector3((float)Lpts[i].Y, (float)Lpts[i].Z, (float)Lpts[i].X);
                 }
                 else
                 {
@@ -94,23 +96,17 @@ namespace MoxGraphics
 
                     for (int i = 0; i < Lpts.Count; i++)
                     {
-                        MoxPoint3D ptv = new MoxPoint3D(Lpts[i][0], Lpts[i][1], Lpts[i][2]);
+                        MoxPoint3D ptv = new MoxPoint3D(Lpts[i].X, Lpts[i].Y, Lpts[i].Z);
                         var ptx = matrix3D.Value.Transform(ptv);
                         vertices[i] = new Vector3((float)ptx.Y, (float)ptx.Z, (float)ptx.X);
-
-                        /*
-                        MoxPoint3D ptn = new MoxPoint3D(Lpts[i][3], Lpts[i][4], Lpts[i][5]);
-                        var ptr = matrix3D.Value.Transform(ptn);
-                        normals[i] = new Vector3((float)ptr.Y, (float)ptr.Z, (float)ptr.X);
-                        */
                     }
                 }
             }
         }
 
-        static Dictionary<string, Dictionary<MoxColor, UnityEngine.Material>> storedMaterials;
+        private static Dictionary<string, Dictionary<MoxColor, UnityEngine.Material>> storedMaterials;
 
-        static UnityEngine.Material GetUniqueMaterial(string Name , MoxColor color)
+        public static Material GetUniqueMaterial(string Name , MoxColor color)
         {
             var shd = Shader.Find(Name);
             UnityEngine.Material mat;

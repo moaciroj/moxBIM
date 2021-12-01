@@ -84,7 +84,7 @@ namespace MoxBIM.IO
                 MoxMatrix3D transform = new MoxMatrix3D();
                 transform.SetIdentify();
                 
-                List<float[]> points = new List<float[]>();
+                List<MoxPoint3D> points = new List<MoxPoint3D>();
                 List<int> index = new List<int>();
 
                 l = MemoryWhileNotEqual(ref lines, ref posline, "LABEL");
@@ -142,7 +142,12 @@ namespace MoxBIM.IO
                         GetPointsMemory(ref lines, ref posline, ref l, ref points);
                         if (l.Substring(0, 5) == "INDEX")
                         {
-                            GetIndex(l, ref index);
+                            if (!GetIndex(l.Substring(7).Trim(' ', ';', ':'), ref index) || points.Count < 3)
+                            {
+                                points = null;
+                                index = null;
+                                transform.SetIdentify();
+                            }
                             l = MemoryWhileNotEqual(ref lines, ref posline, "ENDSEC_POINTS");
                         }
                         else
@@ -163,14 +168,14 @@ namespace MoxBIM.IO
             }
         }
 
-        private static void GetPointsMemory(ref string[] lines, ref int posline, ref string l, ref List<float[]> points)
+        private static void GetPointsMemory(ref string[] lines, ref int posline, ref string l, ref List<MoxPoint3D> points)
         {
             l = MemoryWhileNotEqual(ref lines, ref posline, "");
-            while (l.Length > 1 && l.Substring(0, 2) == "p[" && l.IndexOf(':') > 0)
+            while (l.Length > 3 && l.Substring(0, 2) == "p:")
             {
                 if (posline >= lines.Length) break;
-                float[] p = GetLinePoints(l.Substring(l.IndexOf(':') + 2));
-                points.Add(p);
+                if(MoxPoint3D.StrToPoint(l.Substring(3), out MoxPoint3D p))
+                    points.Add(p);
                 l = MemoryWhileNotEqual(ref lines, ref posline, "");
             }
         }

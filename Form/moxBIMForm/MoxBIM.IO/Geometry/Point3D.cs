@@ -3,6 +3,8 @@
 // End;
 
 using System;
+using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace MoxGraphics.Geometry
@@ -37,7 +39,7 @@ namespace MoxGraphics.Geometry
 
         public override string ToString()
         {
-            return string.Format("{0} {1} {2}", X, Y, Z);
+            return string.Format("{0},{1},{2}", X, Y, Z);
         }
 
 
@@ -125,6 +127,25 @@ namespace MoxGraphics.Geometry
             return new MoxVector3D(a.X - b.X,
                                     a.Y - b.Y,
                                     a.Z - b.Z);
+        }
+
+        public static bool StrToPoint(string csv, out MoxPoint3D point3D)
+        {
+            double val = (double)0;
+            point3D = new MoxPoint3D();
+            var numberStyle = NumberStyles.Float |
+                              NumberStyles.AllowLeadingWhite |
+                              NumberStyles.AllowTrailingWhite |
+                              NumberStyles.AllowLeadingSign |
+                              NumberStyles.AllowDecimalPoint |
+                              NumberStyles.AllowThousands |
+                              NumberStyles.AllowExponent;
+            var dList = csv.Split(',')
+                           .Select(m => { double.TryParse(m, numberStyle, CultureInfo.InvariantCulture, out val); return val; })
+                           .ToList();
+            if (dList.Count != 3) return false;
+            point3D = new MoxPoint3D(dList[0], dList[1], dList[2]);
+            return true;
         }
     }
 }

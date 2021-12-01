@@ -48,37 +48,9 @@ namespace MoxBIM.IO
                     if (item.Points.Count > 0 && item.Index.Count > 0)
                     {
                         wt.WriteLine("POINTS;");
-                        string sx = "";
-                        string vir;
-                        int ct = 1;
                         foreach (var itemp in item.Points)
-                        {
-                            sx = "p[" + ct.ToString() + "]: ";
-                            int ctp = 0;
-                            foreach (var itemf in itemp)
-                            {
-                                if (ctp > 0)
-                                    vir = ",";
-                                else
-                                    vir = "";
-                                sx = sx + vir + itemf.ToString("R");
-                                ctp++;
-                            }
-                            ct++;
-                            wt.WriteLine(sx + ";");
-                        }
-
-                        ct = 1;
-                        sx = "";
-                        foreach (var itemi in item.Index)
-                        {
-                            if (sx.Length > 0)
-                                vir = ",";
-                            else
-                                vir = "";
-                            sx = sx + vir + itemi.ToString();
-                        }
-                        wt.WriteLine("INDEX: " + sx + ";");
+                            wt.WriteLine("p: " + itemp.ToString() + ";");
+                        wt.WriteLine("INDEX: " + item.IdxToString() + ";");
                         wt.WriteLine("ENDSEC_POINTS;");
                     }
                     wt.WriteLine("ENDSEC_ENTITY;");

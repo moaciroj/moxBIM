@@ -158,7 +158,7 @@ namespace MoxProject
                 int parent = instance.InstanceLabel;
                 string type = "Get ExpressType"; //Search express type here
                 MoxMaterial material = GetIfcMaterial(instance);
-                List<float[]> pts = null;
+                List<MoxPoint3D> pts = null;
                 List<int> idxs = null;
                 XbimMatrix3D? t = instance.Transformation;
                 MoxMatrix3D? transform = null;
@@ -173,8 +173,20 @@ namespace MoxProject
                     using (var reader = new BinaryReader(stream))
                     {
                         var mesh = reader.ReadShapeTriangulation();
-                        mesh.ToPointsWithNormalsAndIndices(out pts, out idxs);
-                        
+                        List<float[]> ptx;
+                        mesh.ToPointsWithNormalsAndIndices(out ptx, out idxs);
+                        if (ptx.Count > 2 && idxs.Count % 3 == 0)
+                        {
+                            pts = new List<MoxPoint3D>();
+                            foreach (var item in ptx)
+                                pts.Add(new MoxPoint3D((double)item[0], (double)item[1], (double)item[2]));
+                        }
+                        else
+                        {
+                            pts = null;
+                            idxs = null;
+                            transform = null;
+                        }
                     }
                 }
                 mygeo.AddEntity(FileName, label, parent, type, material, pts, idxs, transform);
