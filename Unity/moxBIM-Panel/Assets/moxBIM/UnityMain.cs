@@ -4,8 +4,6 @@ using MoxInterface;
 using MoxGraphics;
 using MoxBIM.IO;
 
-
-
 namespace MoxMain
 {
     public class UnityMain : MonoBehaviour
@@ -34,18 +32,18 @@ namespace MoxMain
         // Start is called before the first frame update
         void Start()
         {
-            moxMessage = "Mox BIM iniciado!";
+            moxMessage = "Sistema moxBIM iniciado;";
             //Instanciar a Classe IFC
             Main_Instance_Graphics = gameObject.AddComponent<MoxGraphicsClass>();
             //Ultima instancia Classe Interface
             Main_Instance_Interface = gameObject.AddComponent<MoxInterfaceClass>();
-            Debug.Log("Mox BIM iniciado!");
+            Debug.Log("Sistema moxBIM iniciado;");
         }
 
         void OnGUI()
         {
             if (moxMessage != null)
-              GUI.Label(new Rect(10, 10, 400, 20), moxMessage);
+                GUI.Label(new Rect(10, 10, 400, 20), moxMessage);
         }
 
         /// <summary>

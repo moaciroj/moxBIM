@@ -12,20 +12,14 @@ public class MoxText : MonoBehaviour
     public GameObject textmox;
 
     private bool Aguardar = true;
-    private float AguardarValor = 0.5f;
+    private float AguardarValor = 0.01f;
     
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<Canvas>().enabled = false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     void OnGUI()
     {
         if (Aguardar && Input.GetKeyDown(KeyCode.F3))
@@ -42,10 +36,11 @@ public class MoxText : MonoBehaviour
         Aguardar = true;
     }
 
-    public void AddLine(string l)
+    public GameObject AddLine(string l)
     {
         var txt = Instantiate(textmox, contentwindow);
         txt.GetComponent<Text>().text = l;
+        return txt;
     }
 
     public void Clear()

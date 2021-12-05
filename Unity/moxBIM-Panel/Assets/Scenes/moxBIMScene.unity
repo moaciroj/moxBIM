@@ -817,7 +817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5575b185ea52d458c8a5d65738e478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moxMesh: {fileID: 4766216816351574167, guid: d14a104c106906441b8f6bbfb48dc7bc, type: 3}
+  moxmesh: {fileID: 4766216816351574167, guid: d14a104c106906441b8f6bbfb48dc7bc, type: 3}
 --- !u!4 &622869578
 Transform:
   m_ObjectHideFlags: 0

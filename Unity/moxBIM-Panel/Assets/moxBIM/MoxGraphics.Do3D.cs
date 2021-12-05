@@ -34,8 +34,6 @@ namespace MoxGraphics
                 //gameobject = MakeMesh(ent, parent);
 
                 Undo.RegisterCreatedObjectUndo(gameobject, "Created Object");
-
-                
             }
             var obj = GameObject.Find(g.FileName);
             if (obj != null)
@@ -65,7 +63,6 @@ namespace MoxGraphics
             MeshFilter meshFilter = gameobject.AddComponent<MeshFilter>();
             Mesh mesh = new Mesh();
             DoTrasnform(ent, ref gameobject, out var vertices, out var normals);
-            Debug.Log(ent.Material.name);
             mesh.vertices = vertices;
             mesh.RecalculateBounds();
             mesh.triangles = ent.Index.ToArray();
@@ -104,28 +101,28 @@ namespace MoxGraphics
             }
         }
 
-        private static Dictionary<string, Dictionary<MoxColor, UnityEngine.Material>> storedMaterials;
+        private static Dictionary<string, Dictionary<MoxColor, Material>> storedMaterials;
 
         public static Material GetUniqueMaterial(string Name , MoxColor color)
         {
             var shd = Shader.Find(Name);
-            UnityEngine.Material mat;
+            Material mat;
             if (shd != null)
-                mat = new UnityEngine.Material(shd);
+                mat = new Material(shd);
             else
-                mat = new UnityEngine.Material(Shader.Find("Standard"));
+                mat = new Material(Shader.Find("Standard"));
 
-            if (storedMaterials == null) storedMaterials = new Dictionary<string,Dictionary<MoxColor, UnityEngine.Material>>();
+            if (storedMaterials == null) storedMaterials = new Dictionary<string,Dictionary<MoxColor, Material>>();
 
             if (!storedMaterials.ContainsKey(Name))
             {
-                Dictionary<MoxColor, UnityEngine.Material> newDict = new Dictionary<MoxColor, UnityEngine.Material>();
+                Dictionary<MoxColor, Material> newDict = new Dictionary<MoxColor, Material>();
                 storedMaterials.Add(Name, newDict);
             }
             
             if (!storedMaterials[Name].ContainsKey(color))
             {
-                UnityEngine.Material clone = UnityEngine.Material.Instantiate(mat) as UnityEngine.Material;
+                Material clone = Material.Instantiate(mat) as Material;
 
                 if (color.R < 0 || color.R > 255) color.R = 255; 
                 if (color.G < 0 || color.G > 255) color.G = 255; 

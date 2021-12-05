@@ -30,6 +30,8 @@ namespace MoxMain
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+
+            this.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.MoxTreeView_AfterSelect);
         }
 
         #endregion

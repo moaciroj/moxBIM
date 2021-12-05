@@ -1,77 +1,124 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections;
 using System.Windows.Forms;
 using System.Linq;
+using Xbim.Ifc;
 using Xbim.Ifc.ViewModels;
 using Xbim.Ifc4.Interfaces;
+using Xbim.Common;
 using MoxProject;
-
 
 namespace MoxMain
 {
     public partial class MoxTreeView : TreeView
     {
+        public MoxProjectClass TvProject { get; set; }
 
-        public MoxProjectClass TvP{ get; set; }
+        public MoxNode CurrentNode { get; private set; }
+
+        public Dictionary<string, IEnumerable<MoxGroupsModel>> HierarchyView { get; private set; }
 
         public MoxTreeView()
         {
             InitializeComponent();
         }
 
-        public new TreeNodeCollection Nodes
-        {
-            get
-            {
-                return base.Nodes;
-            }
-        }
-
-
         public void SetTreeViewModel (MoxProjectClass p)
         {
-            TvP = p;
+            TvProject = p;
         }
-
 
         public void ShowAllData() 
         {
+            saveTreeState(this);
             this.Nodes.Clear();
+            HierarchyView = new Dictionary<string, IEnumerable<MoxGroupsModel>>();
 
-            if (TvP != null && TvP.IFCFileList.Count > 0)
+            if (TvProject != null && TvProject.IFCFileList.Count > 0)
             {
-                foreach (var f in TvP.IFCFileList)
+                foreach (var f in TvProject.IFCFileList)
                 {
-                    this.Nodes.Add(f.FileName);
-                    var project = f.model.Instances.OfType<IIfcProject>().FirstOrDefault();
-                    if (project != null)
-                    {
-                        List<SpatialViewModel> svList = new List<SpatialViewModel>();
-                        foreach (var item in project.SpatialStructuralElements)
-                        {
-                            var sv = new SpatialViewModel(item, null);
-                            svList.Add(sv);
-                        }
+                    ViewModel(f.FileName, f.model);
+                }
 
-                        //Não sei pra que que serve mas repeti ... 
-                        //Deve ser para deixar a leitura mais lenta ...
-                        foreach (var child in svList)
-                        {
-                            LazyLoadAll(child);
-                        }
-                    }
+                PopulateMoxTreeview();
+            }
+            restoreTreeState(this);
+        }
+
+        private void PopulateMoxTreeview()
+        {
+            foreach (var file in HierarchyView)
+            {
+                var node = new MoxNode(null, file.Key);
+                this.Nodes.Add(node);
+                foreach (var view in file.Value)
+                {
+                    RecursivePopulate(view, node);
                 }
             }
         }
 
-        private void LazyLoadAll(IXbimViewModel parent)
+        private void RecursivePopulate(IXbimViewModel g, MoxNode n)
         {
-            foreach (var child in parent.Children)
+            if (g != null && g.Children.Any())
             {
-                LazyLoadAll(child);
+                foreach (var item in g.Children)
+                {
+                    var node = new MoxNode(item, item.Name);
+                    n.Nodes.Add(node);
+                    RecursivePopulate(item, node);
+                }
             }
         }
 
+        private void MoxTreeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
+        {
+            MoxNode myNode = (MoxNode)e.Node as MoxNode;
+            CurrentNode = myNode;
+        }
 
+        private void ViewModel(string f, IModel Model)
+        {
+            //Models
+            var project = Model.Instances.OfType<IIfcProject>().FirstOrDefault();
+            if (project != null)
+            {
+                var svList = new List<MoxGroupsModel>();
+                svList.Add(new MoxGroupsModel(project, XbimViewType.SpatialStructure));
+                AddHierachy(f, svList);
+            }
+
+            //Groups
+            IEnumerable list = Enumerable.Empty<MoxGroupsModel>();
+            if (Model != null)
+            {
+                MoxGroupsModel v = new MoxGroupsModel(Model, XbimViewType.Groups);
+                if (v.Children.Any())
+                {
+                    var glist = new List<MoxGroupsModel>();
+                    glist.Add(v);
+                    AddHierachy(f, glist);
+                }
+            }
+        }
+
+        private void AddHierachy (string f, IEnumerable<MoxGroupsModel> m)
+        {
+            if (HierarchyView.ContainsKey(f))
+            {
+                if (m != null)
+                {
+                    if (HierarchyView[f] == null)
+                        HierarchyView[f] = m;
+                    else
+                        HierarchyView[f] = HierarchyView[f].Concat(m);
+                }
+            }
+            else
+                HierarchyView.Add(f, m);
+        }
 
         #region Preserve Restore
         private Dictionary<string, bool> treeState_dic = new Dictionary<string, bool>();

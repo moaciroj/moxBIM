@@ -61,7 +61,6 @@ namespace MoxInterface
             Aguardar = true;
         }
 
-
         #region Open File with File Browser Pró
         /*
         /// <summary>

@@ -44,7 +44,6 @@ public class MoxMesh: MonoBehaviour
         MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
         Mesh mesh = new Mesh();
         DoTrasnform(ent, out var vertices);
-        Debug.Log(ent.Material.name);
         mesh.vertices = vertices;
         mesh.RecalculateBounds();
         mesh.triangles = ent.Index.ToArray();

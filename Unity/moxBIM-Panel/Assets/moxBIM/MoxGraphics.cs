@@ -2,26 +2,33 @@
 using UnityEngine;
 using MoxGraphics.Geometry;
 using MoxBIM.IO;
+using System.Collections.Generic;
 
 namespace MoxGraphics
 {
     public partial class MoxGraphicsClass : MonoBehaviour
     {
-        MoxIOFile geometries = new MoxIOFile();
+        private MoxIOFile geometries = new MoxIOFile();
+
+        private int MaxLinesMoxText = 100;
+        private List<GameObject> ListMoxText = new List<GameObject>();
 
         public MoxGeometry currentgeometry { get; private set; }
 
-        public GameObject moxw { get; private set; }
+        private GameObject moxw { get; set; }
 
         void Start()
         {
             moxw = GameObject.Find("MoxWindowCanvas");
+
+            AddMoxWindow("> Sistema moxBIM iniciado;");
+            AddMoxWindow();
+
+            /*
             currentgeometry = geometries.ReadFileGeometry(@"C:\Users\moaci\OneDrive\Área de Trabalho\Projeto AR Curso.mox");
-
             Do3D(currentgeometry);
-            //PrintGeometry(currentgeometry);
-
-            var gameobject = Resources.Load("moxMesh");
+            PrintGeometry(currentgeometry);
+            */
         }
 
         void Update()
@@ -51,43 +58,15 @@ namespace MoxGraphics
                 Do3D(g);
             }
         }
+
         private void PrintGeometry(MoxGeometry cgeo)
         {
             try
             {
-                AddMoxWindow("** Geometry: " + cgeo.FileName + " **");
-                AddMoxWindow("<< OneMetre: " + cgeo.OneMetre + " >>");
+                AddMoxWindow("> Geometry: " + cgeo.FileName + ";");
+                AddMoxWindow("> OneMetre: " + cgeo.OneMetre + ";");
+                AddMoxWindow("> Entities: " + cgeo.Entities.Count + ";");
                 AddMoxWindow();
-
-                int tab = 8;
-                for (int i = 0; i < cgeo.Entities.Count; i++)
-                {
-                    MoxEntity en = cgeo.Entities[i];
-                    AddMoxWindow(Gsp(tab) + "> Entity [" + i.ToString() + "];");
-                    AddMoxWindow(Gsp(tab * 2) + "- File:   " + en.File + ";");
-                    AddMoxWindow(Gsp(tab * 2) + "- Label:  " + en.Label + ";");
-                    AddMoxWindow(Gsp(tab * 2) + "- Parent: " + en.Parent + ";");
-                    AddMoxWindow(Gsp(tab * 2) + "- Type: " + en.Type + ";");
-                    MoxColor c = en.Material.GetColor();
-                    AddMoxWindow(Gsp(tab * 2) + "- Color:  R[" + c.R.ToString() + "] G [" +
-                                                                 c.G.ToString() + "] B [" +
-                                                                 c.B.ToString() + "] A [" +
-                                                                 c.A.ToString("R") + "] Name: " +
-                                                                 en.Material.name + ";");
-                    AddMoxWindow(Gsp(tab * 2) + "- Transform: " + en.Transform.ToString() + ";");
-                    var pts = en.Points;
-                    if (pts != null)
-                    {
-                        AddMoxWindow(Gsp(tab * 2) + "- Points: ");
-                        for (int j = 0; j < pts.Count; j++)
-                        {
-                            AddMoxWindow(Gsp(tab * 3) + "p: " + pts[j].ToString() + ";");
-                        }
-
-                        AddMoxWindow(Gsp(tab * 2) + "- Index: " + en.IdxToString() + ";");
-                    }
-                    AddMoxWindow();
-                }
             }
             catch (Exception ex)
             {
@@ -95,7 +74,6 @@ namespace MoxGraphics
                 throw new Exception(ex.Message);
             }
             moxw.GetComponent<Canvas>().enabled = true;
-            
         }
 
         private string Gsp(int x)
@@ -108,28 +86,27 @@ namespace MoxGraphics
             return s;
         }
 
-        private void AddMoxWindow(string txt)
+        public void AddMoxWindow(string txt)
         {
             if (moxw != null)
             {
-                moxw.GetComponent<MoxText>().AddLine(txt);
+                if (ListMoxText.Count > MaxLinesMoxText)
+                    Destroy(ListMoxText[0]);
+                var go = moxw.GetComponent<MoxText>().AddLine(txt);
+                ListMoxText.Add(go);
             }
         }
 
-        private void AddMoxWindow()
+        public void AddMoxWindow()
         {
-            if (moxw != null)
-            {
-                moxw.GetComponent<MoxText>().AddLine("");
-            }
+            AddMoxWindow("");
         }
 
-
-        private void ClearMoxWindow()
+        public void ClearMoxWindow()
         {
-            if (moxw != null)
+            foreach (GameObject item in ListMoxText)
             {
-                moxw.GetComponent<MoxText>().Clear();
+                Destroy(item);
             }
         }
     }

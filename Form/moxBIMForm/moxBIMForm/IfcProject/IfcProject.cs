@@ -100,7 +100,7 @@ namespace MoxProject
                         geometries.AddGeometry(geometry);
                         geometries.WriteFileGeometry(fileifcname, null);
 
-
+                        /*
                         MoxIOFile TESTE = new MoxIOFile();
                         var sw1 = Stopwatch.StartNew();
                         MoxGeometry g = TESTE.ReadFileGeometry(fileifcname);
@@ -110,6 +110,7 @@ namespace MoxProject
                         MoxGeometry y = TESTE.ReadFileGeometryMemory(fileifcname);
                         long t2 = sw2.ElapsedMilliseconds;
                         MessageBox.Show("Tempo do algorítimo 1 = " + t1 + "\r\nTempo do algorítimo 2 = " + t2);
+                        */
 
                         MoxGraphicsClass graphics = new MoxGraphicsClass();
                         graphics.SendToUnity(fileifcname);

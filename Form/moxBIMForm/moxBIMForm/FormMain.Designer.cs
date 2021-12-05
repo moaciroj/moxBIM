@@ -172,7 +172,7 @@ namespace MoxMain
             this.mTv.Size = new System.Drawing.Size(200, 382);
             this.mTv.TabIndex = 1;
             this.mTv.TreeState_dic = ((System.Collections.Generic.Dictionary<string, bool>)(resources.GetObject("mTv.TreeState_dic")));
-            this.mTv.TvP = null;
+            this.mTv.TvProject = null;
             // 
             // statusStrip1
             // 
