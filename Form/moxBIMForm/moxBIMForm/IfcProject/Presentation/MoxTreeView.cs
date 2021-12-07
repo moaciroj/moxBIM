@@ -17,24 +17,54 @@ namespace MoxMain
 
         public MoxNode CurrentNode { get; private set; }
 
-        public Dictionary<string, IEnumerable<MoxGroupsModel>> HierarchyView { get; private set; }
+        private Dictionary<string, IEnumerable<IXbimViewModel>> HierarchyView { get; set; }
+        public Dictionary<IXbimViewModel, IEnumerable<MoxNode>> MoxVNodes { get; private set; }
+        public Dictionary<int, IEnumerable<MoxNode>> MoxLabelNodes { get; private set; }
 
         public MoxTreeView()
         {
             InitializeComponent();
+            New();
         }
 
-        public void SetTreeViewModel (MoxProjectClass p)
+        private void New()
+        {
+            saveTreeState(this);
+            this.Nodes.Clear();
+            HierarchyView = new Dictionary<string, IEnumerable<IXbimViewModel>>();
+            MoxVNodes = new Dictionary<IXbimViewModel, IEnumerable<MoxNode>>();
+            MoxLabelNodes = new Dictionary<int, IEnumerable<MoxNode>>();
+        }
+
+        public void AddTreeViewModel (MoxProjectClass p)
         {
             TvProject = p;
+            var fl = p.LastIfcFile;
+            if (fl != null)
+            {
+                if (!HierarchyView.ContainsKey(fl.FileName))
+                {
+                    ViewModel(fl.FileName, fl.model);
+                    if (HierarchyView.ContainsKey(fl.FileName))
+                    {
+                        var file = HierarchyView[fl.FileName];
+                        var node = new MoxNode(null, fl.FileName);
+                        this.Nodes.Add(node);
+                        foreach (var view in file)
+                        {
+                            var nnode = new MoxNode(view, view.Name);
+                            node.Nodes.Add(nnode);
+                            AddDict(view, nnode);
+                            RecursivePopulate(view, nnode);
+                        }
+                    }
+                }
+            }
         }
 
         public void ShowAllData() 
         {
-            saveTreeState(this);
-            this.Nodes.Clear();
-            HierarchyView = new Dictionary<string, IEnumerable<MoxGroupsModel>>();
-
+            New();
             if (TvProject != null && TvProject.IFCFileList.Count > 0)
             {
                 foreach (var f in TvProject.IFCFileList)
@@ -42,12 +72,13 @@ namespace MoxMain
                     ViewModel(f.FileName, f.model);
                 }
 
-                PopulateMoxTreeview();
+                PopulateAllMoxTreeview();
             }
             restoreTreeState(this);
         }
 
-        private void PopulateMoxTreeview()
+
+        private void PopulateAllMoxTreeview()
         {
             foreach (var file in HierarchyView)
             {
@@ -55,7 +86,10 @@ namespace MoxMain
                 this.Nodes.Add(node);
                 foreach (var view in file.Value)
                 {
-                    RecursivePopulate(view, node);
+                    var nnode = new MoxNode(view, view.Name);
+                    node.Nodes.Add(nnode);
+                    AddDict(view, nnode);
+                    RecursivePopulate(view, nnode);
                 }
             }
         }
@@ -68,8 +102,35 @@ namespace MoxMain
                 {
                     var node = new MoxNode(item, item.Name);
                     n.Nodes.Add(node);
+                    AddDict(item, node);
                     RecursivePopulate(item, node);
                 }
+            }
+        }
+
+        private void AddDict(IXbimViewModel v, MoxNode n)
+        {
+            if (MoxVNodes.ContainsKey(v))
+            {
+                MoxVNodes[v] = MoxVNodes[v].Append(n);
+            }
+            else
+            {
+                var l = new List<MoxNode>();
+                l.Add(n);
+                MoxVNodes.Add(v, l);
+            }
+
+
+            if (MoxLabelNodes.ContainsKey(v.EntityLabel))
+            {
+                MoxLabelNodes[v.EntityLabel] = MoxLabelNodes[v.EntityLabel].Append(n);
+            }
+            else
+            {
+                var l = new List<MoxNode>();
+                l.Add(n);
+                MoxLabelNodes.Add(v.EntityLabel, l);
             }
         }
 
