@@ -43,27 +43,35 @@ namespace MoxMain
             this.panel3 = new System.Windows.Forms.Panel();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.mTv = new MoxMain.MoxTreeView();
+            this.mTv = new MoxTree();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.standardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.mProp = new MoxProperties();
+            this.splitter4 = new System.Windows.Forms.Splitter();
+            this.MoxTab = new System.Windows.Forms.TabControl();
+            this.tabProp = new System.Windows.Forms.TabPage();
+            this.tabQuant = new System.Windows.Forms.TabPage();
+            this.tabObj = new System.Windows.Forms.TabPage();
+            this.tabType = new System.Windows.Forms.TabPage();
+            this.tabMat = new System.Windows.Forms.TabPage();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.panel4 = new System.Windows.Forms.Panel();
             this.PanelUnity = new System.Windows.Forms.Panel();
             this.splitter3 = new System.Windows.Forms.Splitter();
             this.panel5 = new System.Windows.Forms.Panel();
             this.TextLog = new System.Windows.Forms.TextBox();
-            this.DlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.MenuTxt = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ClearTxt = new System.Windows.Forms.ToolStripMenuItem();
+            this.DlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.menu.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.MoxTab.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.MenuTxt.SuspendLayout();
@@ -168,11 +176,8 @@ namespace MoxMain
             this.mTv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mTv.Location = new System.Drawing.Point(0, 0);
             this.mTv.Name = "mTv";
-            this.mTv.PreseveTreeState = false;
             this.mTv.Size = new System.Drawing.Size(200, 382);
             this.mTv.TabIndex = 1;
-            this.mTv.TreeState_dic = ((System.Collections.Generic.Dictionary<string, bool>)(resources.GetObject("mTv.TreeState_dic")));
-            this.mTv.TvProject = null;
             // 
             // statusStrip1
             // 
@@ -212,20 +217,94 @@ namespace MoxMain
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.propertyGrid1);
+            this.panel2.Controls.Add(this.mProp);
+            this.panel2.Controls.Add(this.splitter4);
+            this.panel2.Controls.Add(this.MoxTab);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(619, 24);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(181, 404);
             this.panel2.TabIndex = 7;
             // 
-            // propertyGrid1
+            // mProp
             // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(181, 404);
-            this.propertyGrid1.TabIndex = 0;
+            this.mProp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mProp.Location = new System.Drawing.Point(0, 73);
+            this.mProp.Name = "mProp";
+            this.mProp.Size = new System.Drawing.Size(181, 331);
+            this.mProp.TabIndex = 3;
+            // 
+            // splitter4
+            // 
+            this.splitter4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter4.Location = new System.Drawing.Point(0, 70);
+            this.splitter4.Name = "splitter4";
+            this.splitter4.Size = new System.Drawing.Size(181, 3);
+            this.splitter4.TabIndex = 2;
+            this.splitter4.TabStop = false;
+            // 
+            // MoxTab
+            // 
+            this.MoxTab.Controls.Add(this.tabProp);
+            this.MoxTab.Controls.Add(this.tabQuant);
+            this.MoxTab.Controls.Add(this.tabObj);
+            this.MoxTab.Controls.Add(this.tabType);
+            this.MoxTab.Controls.Add(this.tabMat);
+            this.MoxTab.Dock = System.Windows.Forms.DockStyle.Top;
+            this.MoxTab.Location = new System.Drawing.Point(0, 0);
+            this.MoxTab.Multiline = true;
+            this.MoxTab.Name = "MoxTab";
+            this.MoxTab.SelectedIndex = 0;
+            this.MoxTab.Size = new System.Drawing.Size(181, 70);
+            this.MoxTab.TabIndex = 1;
+            // 
+            // tabProp
+            // 
+            this.tabProp.Location = new System.Drawing.Point(4, 44);
+            this.tabProp.Name = "tabProp";
+            this.tabProp.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProp.Size = new System.Drawing.Size(173, 22);
+            this.tabProp.TabIndex = 0;
+            this.tabProp.Text = "Properties";
+            this.tabProp.UseVisualStyleBackColor = true;
+            // 
+            // tabQuant
+            // 
+            this.tabQuant.Location = new System.Drawing.Point(4, 44);
+            this.tabQuant.Name = "tabQuant";
+            this.tabQuant.Padding = new System.Windows.Forms.Padding(3);
+            this.tabQuant.Size = new System.Drawing.Size(173, 22);
+            this.tabQuant.TabIndex = 1;
+            this.tabQuant.Text = "Quantities";
+            this.tabQuant.UseVisualStyleBackColor = true;
+            // 
+            // tabObj
+            // 
+            this.tabObj.Location = new System.Drawing.Point(4, 44);
+            this.tabObj.Name = "tabObj";
+            this.tabObj.Padding = new System.Windows.Forms.Padding(3);
+            this.tabObj.Size = new System.Drawing.Size(173, 22);
+            this.tabObj.TabIndex = 2;
+            this.tabObj.Text = "Object";
+            this.tabObj.UseVisualStyleBackColor = true;
+            // 
+            // tabType
+            // 
+            this.tabType.Location = new System.Drawing.Point(4, 44);
+            this.tabType.Name = "tabType";
+            this.tabType.Size = new System.Drawing.Size(173, 22);
+            this.tabType.TabIndex = 3;
+            this.tabType.Text = "Type";
+            this.tabType.UseVisualStyleBackColor = true;
+            // 
+            // tabMat
+            // 
+            this.tabMat.Location = new System.Drawing.Point(4, 44);
+            this.tabMat.Name = "tabMat";
+            this.tabMat.Size = new System.Drawing.Size(173, 22);
+            this.tabMat.TabIndex = 4;
+            this.tabMat.Text = "Materials";
+            this.tabMat.UseVisualStyleBackColor = true;
             // 
             // splitter2
             // 
@@ -288,10 +367,6 @@ namespace MoxMain
             this.TextLog.TabIndex = 0;
             this.TextLog.WordWrap = false;
             // 
-            // DlgOpen
-            // 
-            this.DlgOpen.FileName = "openFileDialog1";
-            // 
             // MenuTxt
             // 
             this.MenuTxt.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -302,9 +377,13 @@ namespace MoxMain
             // ClearTxt
             // 
             this.ClearTxt.Name = "ClearTxt";
-            this.ClearTxt.Size = new System.Drawing.Size(180, 22);
+            this.ClearTxt.Size = new System.Drawing.Size(101, 22);
             this.ClearTxt.Text = "Clear";
             this.ClearTxt.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+            // 
+            // DlgOpen
+            // 
+            this.DlgOpen.FileName = "openFileDialog1";
             // 
             // FormMain
             // 
@@ -335,6 +414,7 @@ namespace MoxMain
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.MoxTab.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
@@ -363,17 +443,23 @@ namespace MoxMain
         private System.Windows.Forms.StatusStrip statusStrip2;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Splitter splitter2;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.Splitter splitter3;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.TextBox TextLog;
         private System.Windows.Forms.OpenFileDialog DlgOpen;
-        private MoxTreeView mTv;
-        public System.Windows.Forms.Panel PanelUnity;
+        private System.Windows.Forms.Panel PanelUnity;
         private System.Windows.Forms.ToolStripMenuItem testeToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip MenuTxt;
         private System.Windows.Forms.ToolStripMenuItem ClearTxt;
+        private System.Windows.Forms.TabControl MoxTab;
+        private System.Windows.Forms.TabPage tabProp;
+        private System.Windows.Forms.TabPage tabQuant;
+        private System.Windows.Forms.TabPage tabObj;
+        private System.Windows.Forms.Splitter splitter4;
+        private System.Windows.Forms.TabPage tabType;
+        private System.Windows.Forms.TabPage tabMat;
+        private MoxProperties mProp;
+        private MoxTree mTv;
     }
-
 }
 

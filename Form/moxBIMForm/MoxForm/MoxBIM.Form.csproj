@@ -5,6 +5,8 @@
     <TargetFramework>net5.0-windows</TargetFramework>
 	<UseWindowsForms>true</UseWindowsForms>
 	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	<SignAssembly>true</SignAssembly>
+	<AssemblyOriginatorKeyFile>MoxKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

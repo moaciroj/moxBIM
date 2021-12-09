@@ -2,7 +2,7 @@
 
 namespace MoxMain
 {
-    public partial class MoxTreeView : TreeView
+    public partial class MoxTree : TreeView
     {
         public new TreeNodeCollection Nodes
         {

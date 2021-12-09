@@ -8,6 +8,9 @@
 		<StartupObject>MoxMain.Program</StartupObject>
 		<ApplicationIcon />
 		<RunPostBuildEvent>Always</RunPostBuildEvent>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>MoxKey.pfx</AssemblyOriginatorKeyFile>
+		<DelaySign>false</DelaySign>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -16,11 +19,6 @@
 
 	<ItemGroup>
 	  <None Include="..\.editorconfig" Link=".editorconfig" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Database.Collections.Generic" Version="2.0.3" />
-		<PackageReference Include="NETStandard.Library" Version="2.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
