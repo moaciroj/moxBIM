@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoxBIM", "moxBIMForm\MoxBIM.csproj", "{AF90F5F5-0769-4382-AD07-AF166D6E3189}"
+	ProjectSection(ProjectDependencies) = postProject
+		{97A97498-F2FE-4AED-92E3-B10C4E045789} = {97A97498-F2FE-4AED-92E3-B10C4E045789}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoxBIM.Form", "MoxForm\MoxBIM.Form.csproj", "{CF85BADC-FA69-4588-A421-3AF8AE46FDFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoxBIM.IO", "MoxBIM.IO\MoxBIM.IO.csproj", "{97A97498-F2FE-4AED-92E3-B10C4E045789}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF90F5F5-0769-4382-AD07-AF166D6E3189}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{AF90F5F5-0769-4382-AD07-AF166D6E3189}.Debug|Any CPU.Build.0 = Debug|x64
+		{AF90F5F5-0769-4382-AD07-AF166D6E3189}.Debug|x64.ActiveCfg = Debug|x64
+		{AF90F5F5-0769-4382-AD07-AF166D6E3189}.Debug|x64.Build.0 = Debug|x64
+		{AF90F5F5-0769-4382-AD07-AF166D6E3189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF90F5F5-0769-4382-AD07-AF166D6E3189}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF90F5F5-0769-4382-AD07-AF166D6E3189}.Release|x64.ActiveCfg = Release|x64
+		{AF90F5F5-0769-4382-AD07-AF166D6E3189}.Release|x64.Build.0 = Release|x64
+		{CF85BADC-FA69-4588-A421-3AF8AE46FDFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF85BADC-FA69-4588-A421-3AF8AE46FDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF85BADC-FA69-4588-A421-3AF8AE46FDFC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CF85BADC-FA69-4588-A421-3AF8AE46FDFC}.Debug|x64.Build.0 = Debug|Any CPU
+		{CF85BADC-FA69-4588-A421-3AF8AE46FDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF85BADC-FA69-4588-A421-3AF8AE46FDFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF85BADC-FA69-4588-A421-3AF8AE46FDFC}.Release|x64.ActiveCfg = Release|Any CPU
+		{CF85BADC-FA69-4588-A421-3AF8AE46FDFC}.Release|x64.Build.0 = Release|Any CPU
+		{97A97498-F2FE-4AED-92E3-B10C4E045789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97A97498-F2FE-4AED-92E3-B10C4E045789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97A97498-F2FE-4AED-92E3-B10C4E045789}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{97A97498-F2FE-4AED-92E3-B10C4E045789}.Debug|x64.Build.0 = Debug|Any CPU
+		{97A97498-F2FE-4AED-92E3-B10C4E045789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97A97498-F2FE-4AED-92E3-B10C4E045789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97A97498-F2FE-4AED-92E3-B10C4E045789}.Release|x64.ActiveCfg = Release|Any CPU
+		{97A97498-F2FE-4AED-92E3-B10C4E045789}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C591362-7BA2-4BBB-8361-A76C9208260F}
+	EndGlobalSection
+EndGlobal
