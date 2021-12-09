@@ -48,7 +48,7 @@ namespace MoxMain
         {
             MoxViewType = type;
             _model = model;
-            _name = Enum.GetName(typeof(XbimViewType), type);
+            _name = "Initial Node";
             _project = null;
             IEnumerable subs = Children; //call this once to preload first level of hierarchy   
         }
@@ -57,7 +57,7 @@ namespace MoxMain
         {
             MoxViewType = type;
             _model = project.Model;
-            _name = Enum.GetName(typeof(XbimViewType), type);
+            _name = "Initial Node";
             _project = project;
             IEnumerable subs = Children; //call this once to preload first level of hierarchy   
         }

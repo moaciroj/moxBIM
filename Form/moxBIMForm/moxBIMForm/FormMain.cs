@@ -108,7 +108,8 @@ namespace MoxMain
                     if (CurrentProject.AddFile(DlgOpen.FileName))
                     {
                         AddTextLine("Abriu o projeto: " + CurrentProject.LastIfcFile.FileFullName);
-                        mTv.AddTreeViewModel(CurrentProject);
+                        mTv.SetTreeViewModel(CurrentProject);
+                        mTv.ShowAllData();
                     }
                     else
                     {
@@ -122,7 +123,6 @@ namespace MoxMain
 
             }
         }
-        
         private void AddText(string s)
         {
             TextLog.Text += s;
