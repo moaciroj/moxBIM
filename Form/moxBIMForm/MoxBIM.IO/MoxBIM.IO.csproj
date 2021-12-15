@@ -3,14 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MoxKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Reference Include="PresentationCore" />
-  </ItemGroup>
 
 </Project>

@@ -1,7 +1,8 @@
-﻿
+﻿using System.Windows.Forms;
+
 namespace MoxMain
 {
-    partial class MoxTree
+    public partial class MoxTree : TreeView
     {
         /// <summary>
         /// Variável de designer necessária.

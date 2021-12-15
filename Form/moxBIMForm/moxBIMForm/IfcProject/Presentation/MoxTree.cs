@@ -31,12 +31,11 @@ namespace MoxMain
 
         public MoxProjectClass TvProject { get; set; }
 
-        public MoxNode CurrentNode { get; private set; }
+        public MoxNode CurrentNode { get; set; }
 
         private Dictionary<string, IEnumerable<IXbimViewModel>> HierarchyView { get; set; }
         public Dictionary<IXbimViewModel, IEnumerable<MoxNode>> MoxVNodes { get; private set; }
         public Dictionary<int, IEnumerable<MoxNode>> MoxLabelNodes { get; private set; }
-
 
         private void New()
         {
@@ -59,7 +58,10 @@ namespace MoxMain
                     if (HierarchyView.ContainsKey(fl.FileName))
                     {
                         var file = HierarchyView[fl.FileName];
-                        var node = new MoxNode(null, fl.FileName);
+                        IXbimViewModel v = null;
+                        if (file.Any())
+                            v = file.FirstOrDefault();
+                        var node = new MoxNode(v, fl.FileName);
                         this.Nodes.Add(node);
                         foreach (var view in file)
                         {
@@ -82,7 +84,6 @@ namespace MoxMain
                 {
                     ViewModel(f.FileName, f.model);
                 }
-
                 PopulateAllMoxTreeview();
             }
             restoreTreeState(this);
@@ -143,12 +144,6 @@ namespace MoxMain
                 l.Add(n);
                 MoxLabelNodes.Add(v.EntityLabel, l);
             }
-        }
-
-        private void MoxTreeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
-        {
-            MoxNode myNode = (MoxNode)e.Node as MoxNode;
-            CurrentNode = myNode;
         }
 
         private void ViewModel(string f, IModel Model)

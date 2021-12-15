@@ -42,14 +42,32 @@ namespace MoxMain
         public static List<MoxProjectClass> ProjectList = new List<MoxProjectClass>();
 
         public static MoxProjectClass CurrentProject { get; private set; }
-        
+
+        public static bool ChkVerboseIsChecked { get; set; }
+
+        public static selectedTab SelectedTab { get; set; }
+
         int idOwner = 0;
         string PrjName = "Novo projeto";
+
+        MoxProperties mProp = new MoxProperties();
 
         public FormMain(ILogger logger = null)
         {
             InitializeComponent();
-            
+            // 
+            // mTv
+            // 
+            this.mTv = new MoxTree();
+            panelTree.Controls.Add(mTv);
+            mTv.Dock = System.Windows.Forms.DockStyle.Fill;
+            mTv.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.MoxTreeView_AfterSelect);
+            mTv.Name = "mTv";
+
+            ChkVerboseIsChecked = false;
+            ChkVerbose.Checked = false;
+            SelectedTab = selectedTab.tabProp;
+
             if (CurrentProject == null)
             {
                 MnuAddIFC.Enabled = false;
@@ -196,7 +214,7 @@ namespace MoxMain
 
         private void PanelUnity_Resize(object sender, EventArgs e)
         {
-            MoveWindow(unityHWND, 0, 0, PanelUnity.Width, PanelUnity.Height, true);
+            MoveWindow(unityHWND, 0, 0, panelUnity.Width, panelUnity.Height, true);
             ActivateUnityWindow();
         }
 
@@ -238,6 +256,72 @@ namespace MoxMain
             ClearText();
         }
 
+        private void MoxTab_Enter(object sender, EventArgs e)
+        {
+            switch (SelectedTab)
+            {
+                case selectedTab.tabObj:
+                    tabObj.Select();
+                    break;
+                case selectedTab.tabType:
+                    tabType.Select();
+                    break;
+                case selectedTab.tabProp:
+                    tabProp.Select();
+                    break;
+                case selectedTab.tabQuant:
+                    tabQuant.Select();
+                    break;
+                case selectedTab.tabMat:
+                    tabMat.Select();
+                    break;
+            }
+        }
+
+        private void MoxTab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (MoxTab.SelectedIndex)
+            {
+                case 0:
+                    SelectedTab = selectedTab.tabProp;
+                    break;
+                case 1:
+                    SelectedTab = selectedTab.tabQuant;
+                    break;
+                case 2:
+                    SelectedTab = selectedTab.tabObj;
+                    break;
+                case 3:
+                    SelectedTab = selectedTab.tabType;
+                    break;
+                case 4:
+                    SelectedTab = selectedTab.tabMat;
+                    break;
+            }
+            mProp.SetTabValues(SelectedTab);
+            PropertyGrid.Refresh();
+        }
+
+        public void SetEntityProperty(MoxNode m)
+        {
+            if (m.MoxVmodel != null && m.MoxVmodel.Entity != null)
+                this.mProp.Entity = m.MoxVmodel.Entity;
+            else
+                this.mProp.Clear();
+            PropertyGrid.Refresh();
+        }
+
+        private void MoxTreeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
+        {
+            MoxNode myNode = (MoxNode)e.Node as MoxNode;
+            mTv.CurrentNode = myNode;
+            SetEntityProperty(myNode);
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            PropertyGrid.SelectedObject = mProp;
+        }
     }
 }
 

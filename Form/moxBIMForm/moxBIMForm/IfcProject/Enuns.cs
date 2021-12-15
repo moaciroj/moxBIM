@@ -9,4 +9,13 @@
         IfcEntityType,
         Groups
     }
+
+    public enum selectedTab
+    {
+        tabObj = 1,
+        tabType = 2,
+        tabProp = 3,
+        tabQuant = 4,
+        tabMat = 5,
+    }
 }
